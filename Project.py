@@ -5,6 +5,7 @@ class Number_Game:
     def __init__(self):
         self.number = 0
         self.num_guesses = 0
+        self.guess_data = {}
 
     def generate_number(self,difficulty):
         if difficulty == "easy":
@@ -18,21 +19,39 @@ class Number_Game:
             print("hard number generated")
         else:
             print("Please enter a valid difficulty")
+            return False
+        return True
 
-    def guess(self,guess):
-        correct = False
-        
-        if not int(guess):
-            print ("please enter a valid guess")
+    def guess(self,guess_num):
+        self.num_guesses += 1
 
-        while correct is False:
-            if guess > self.number:
-                print("guess is too large")
-                self.num_guesses +=1
-            elif guess < self.number:
-                print("guess is too small")
-                self.num_guesses +=1
-            else:
-                print("you guessed the number")
-                self.num_guesses +=1
+        if guess_num > self.number:
+            print("guess is too large")
+            return False
+        elif guess_num < self.number:
+            print("guess is too small")
+            return False
+        else:
+            print(f"You guessed it in {self.num_guesses} tries!")
+            return True
+
+
+game = Number_Game()
+
+difficulty = input("Choose difficulty (easy, medium, hard): ")
+
+valid_game = game.generate_number(difficulty)
+
+if valid_game:
+    correct = False
+
+    while correct == False:
+        user_input = input("Enter your guess: ")
+
+        if user_input.isdigit():
+            guess = int(user_input)
+            correct = game.guess(guess)
+        else:
+            print("Please enter a valid number")
+    
             
