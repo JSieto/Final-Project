@@ -59,7 +59,7 @@ while play_again == "yes":
             else:
                 print("Please enter a valid number")
         
-        game_data[f"game {num_games}:"] = game.num_guesses
+        game_data[f"game {num_games}"] = game.num_guesses
         num_games +=1
 
         play_again = input("Play again? (yes/no): ")
