@@ -5,7 +5,6 @@ class Number_Game:
     def __init__(self):
         self.number = 0
         self.num_guesses = 0
-        self.guess_data = {}
 
     def generate_number(self,difficulty):
         if difficulty == "easy":
@@ -20,6 +19,8 @@ class Number_Game:
         else:
             print("Please enter a valid difficulty")
             return False
+        
+        self.num_guesses = 0
         return True
 
     def guess(self,guess_num):
@@ -35,23 +36,39 @@ class Number_Game:
             print(f"You guessed it in {self.num_guesses} tries!")
             return True
 
-
 game = Number_Game()
+game_data = {}
+num_games = 1
 
-difficulty = input("Choose difficulty (easy, medium, hard): ")
+play_again = "yes"
 
-valid_game = game.generate_number(difficulty)
+while play_again == "yes":
 
-if valid_game:
-    correct = False
+    difficulty = input("Choose difficulty (easy, medium, hard): ")
+    valid_game = game.generate_number(difficulty)
 
-    while correct == False:
-        user_input = input("Enter your guess: ")
+    if valid_game:
+        correct = False
 
-        if user_input.isdigit():
-            guess = int(user_input)
-            correct = game.guess(guess)
-        else:
-            print("Please enter a valid number")
+        while correct == False:
+            user_input = input("Enter your guess: ")
+
+            if user_input.isdigit():
+                guess = int(user_input)
+                correct = game.guess(guess)
+            else:
+                print("Please enter a valid number")
+        
+        game_data[f"game {num_games}:"] = game.num_guesses
+        num_games +=1
+
+        play_again = input("Play again? (yes/no): ")
+    else:
+        play_again = "no"
+
+print("\nGame Summary:")
+for game_id in game_data:
+    print(f"{game_id}: {game_data[game_id]} guesses")
+            
     
             
